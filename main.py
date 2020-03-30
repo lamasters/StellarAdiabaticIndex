@@ -20,7 +20,15 @@ a = (4*sb)/c  # Radiation density constant
 h_bar = 6.62607004e-31 / (2 * np.pi) # reduced plancks constant
 
 #TODO How is kappa defined?
-kappa = #
+# kappa = #
+
+def kappa(rho, T):
+    kappa_es = 0.02*(1.0 + X)  # m^2/kg
+    kappa_ff = 1.0e24*(Z + 0.0001)*((rho/1000.0)**0.7)*T**(-3.5)  # m^2/kg
+    kappa_H_neg = 2.5e-32*(Z/0.02)*((rho/1000.0)** 0.5)*(T**9.0)  # m^2/kg
+
+    kappa_main = 1.0/((1.0/kappa_H_neg) + (1.0/max(kappa_es, kappa_ff)))
+    return kappa_main
 
 # Takes the mass of the star, density, radius, temperature and dT/dr as inputs
 # Returns drho/dr (rate of change of density)
@@ -33,8 +41,7 @@ def drho_dr(M, rho, r, T, dT):
 # Takes the luminosity of the star, temperature, radius, mass, density and adiabatic index as inputs
 # Returns dT/dr (rate of change of temperature)
 def dT_dr(L, T, r, M, rho, gamma):
-    factor_1 = (3 * kappa * rho * L) / (16 * np.pi * a * c * T**3 * r**2) # First factor which determines temperature change
-    
+    factor_1 = (3 * kappa(rho, T) * rho * L) / (16 * np.pi * a * c * T**3 * r**2) # First factor which determines temperature change
     numerator = (1 - 1/gamma) * G * M * rho
     denominator = r**2 * ((3 * np.pi**2)**(2/3) * h_bar**2) / (5 * m_e * T) * (rho/m_p)**(5/3) + rho * (k / (mu * m_p)) + (1/3) * a * T**3)
 
