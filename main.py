@@ -6,6 +6,8 @@ mu =  0.6
 X = 0.7
 Y = 0.3
 Z = 0
+c = 2.99792458e8 # speed of light (m/s)
+sb = 5.670374419e-8 # stefan-boltzman constant
 gamma_0 = 5/3
 G = 6.67e-11 # gravitational constant
 k = 1.38064852e-23# boltzmann constant
@@ -13,7 +15,7 @@ m_p = 1.6726219e-27 # proton mass
 m_e = 9.10938356e-31 # electron mass
 
 #TODO How is a defined?
-a = #
+a = (4*sb)/c  # Radiation density constant
 
 h_bar = 6.62607004e-31 / (2 * np.pi) # reduced plancks constant
 
