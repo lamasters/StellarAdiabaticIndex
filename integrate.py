@@ -7,15 +7,14 @@ M_sun = 1.9885e30 # Mass of the sun
 # current integration step
 # Returns the updated array of variables
 def step(conds, r, gamma):
-    M, L, T, tau, rho = conds
+    M, L, T,  rho = conds
 
     dM = dM_dr(r, rho)
     dL = dL_dr(r, rho, T)
     dT = dT_dr(L, T, r, M, rho, gamma)
-    dtau = dtau_dr(rho, T)
     drho = drho_dr(M, rho, r, T, dT)
 
-    return np.array([dM, dL, dT, dtau, drho])
+    return np.array([dM, dL, dT, drho])
 
 # Calculate the 4th order Runge-Kutta values,
 # find the delta in each condition from these and
@@ -34,9 +33,9 @@ def rk_solve(conds, R, dr, gamma):
 # depth at the surface
 # Returns inf if undefined
 def surf_bound(conds, R, gamma):
-    drho = drho_dr(conds[0], conds[4], R, conds[2], dT_dr(conds[1], conds[2], R, conds[0], conds[4], gamma))
+    drho = drho_dr(conds[0], conds[3], R, conds[2], dT_dr(conds[1], conds[2], R, conds[0], conds[3], gamma))
     if drho != 0:
-        tau_lim = kappa(conds[4], conds[2]) * conds[4]**2 / drho
+        tau_lim = kappa(conds[3], conds[2]) * conds[3]**2 / drho
     else:
         tau_lim = np.inf
 
@@ -47,18 +46,19 @@ def surf_bound(conds, R, gamma):
 # Returns the final state when the opacity target
 # is reached or the mass of the star is greater than
 # 1000M_sun
-def integrate_functions(conds):
-    dr = 10000
+# Input conditions are as follows:
+# [Mass, Luminosity, Temperature, Density]
+def integrate_functions(conds, dr):
     R = dr / 1000
     gamma = 5/3
-    dtau = dtau_dr(conds[4], conds[2])
+    dtau = dtau_dr(conds[3], conds[2])
     tau_lim = abs(surf_bound(conds, R, gamma))
     
     # Check whether the opacity or mass condition has been met
     while dtau < tau_lim and conds[0] < 1e3 * M_sun:
         conds = rk_solve(conds, R, dr, gamma)
         R += dr
-        dtau = dtau_dr(conds[4], conds[2])
+        dtau = dtau_dr(conds[3], conds[2])
         tau_lim = abs(surf_bound(conds, R, gamma))
 
     return conds
