@@ -54,10 +54,23 @@ def dT_dr(L, T, r, M, rho, gamma):
 def dM_dr(r, rho):
     return 4 * np.pi * r**2 * rho
 
+# Takes the density and temperature as inputs.
+# Returns the function eps(rho, T), the total specific energy generation rate.
+# See equations (8) and (9) of the project description.
+def eps(rho, T):
+    rho_5 = rho/(10**5)
+    T_6 = T/(10**6)
+    X_CNO = 0.03 * X
+
+    eps_PP = 1.07e-7 * rho_5 * X*2 * T_6*4
+    eps_CN0 = 8.24e-26 * rho_5 * X * X_CNO * T_6**19.9
+
+    return eps_PP + eps_CNO
+    
 # Takes the radius, density and temperature as inputs
 # Returns dL/dr (rate of change of luminosity)
 def dL_dr(r, rho, T):
-    return 4 * np.pi * r**2 * rho**2 * X**2 * (1.07e-12 * (T/10**6)**4 + 8.24e-31 * 0.03 * (T/10**6)**19.9)
+    return 4 * np.pi * r**2 * rho * eps(rho, T)
 
 # Takes the density and temperature as inputs
 # Returns dtau/dr (rate of change of opacity)
