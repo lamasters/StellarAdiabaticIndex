@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 
 # Global Constants
 mu =  0.6
-X = 0.7
-Y = 0.3
-Z = 0
+X = 0.74
+Y = 0.25
+Z = 0.01
 c = 2.99792458e8 # speed of light (m/s)
 sb = 5.670374419e-8 # stefan-boltzman constant
 gamma_0 = 5/3
