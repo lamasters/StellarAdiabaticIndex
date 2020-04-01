@@ -58,10 +58,7 @@ def integrate_functions(conds):
     while dtau < tau_lim and conds[0] < 1e3 * M_sun:
         conds = rk_solve(conds, R, dr, gamma)
         R += dr
-        print(dtau, conds[0] / (1e3 * M_sun), tau_lim)
         dtau = dtau_dr(conds[4], conds[2])
         tau_lim = abs(surf_bound(conds, R, gamma))
 
     return conds
-
-print(integrate_functions([0, 0, 1.571e7, 1, 1.622e5]))
