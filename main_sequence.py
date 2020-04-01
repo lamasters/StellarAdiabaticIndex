@@ -63,7 +63,7 @@ def eps(rho, T):
     X_CNO = 0.03 * X
 
     eps_PP = 1.07e-7 * rho_5 * X*2 * T_6*4
-    eps_CN0 = 8.24e-26 * rho_5 * X * X_CNO * T_6**19.9
+    eps_CNO = 8.24e-26 * rho_5 * X * X_CNO * T_6**19.9
 
     return eps_PP + eps_CNO
     
