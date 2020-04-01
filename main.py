@@ -43,7 +43,7 @@ def drho_dr(M, rho, r, T, dT):
 def dT_dr(L, T, r, M, rho, gamma):
     factor_1 = (3 * kappa(rho, T) * rho * L) / (16 * np.pi * a * c * T**3 * r**2) # First factor which determines temperature change
     numerator = (1 - 1/gamma) * G * M * rho
-    denominator = r**2 * ((3 * np.pi**2)**(2/3) * h_bar**2) / (5 * m_e * T) * (rho/m_p)**(5/3) + rho * (k / (mu * m_p)) + (1/3) * a * T**3)
+    denominator = r**2 * ((3 * np.pi**2)**(2/3) * h_bar**2) / (5 * m_e * T) * (rho/m_p)**(5/3) + rho * (k / (mu * m_p)) + (1/3) * a * T**3
 
     factor_2 = numerator/denominator # second factor which determines temperature change
 
