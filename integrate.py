@@ -70,6 +70,7 @@ def integrate_functions(conds, dr):
 # core temperature and density, 
 # bisects density value until
 # expected luminosity is found
+# iteration should be set to 0 to start
 def bisect(T_core, rho_max, rho_min, iteration):
     print("Iteration:", iteration)
     rho = (rho_max - rho_min)/2
