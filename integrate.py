@@ -81,6 +81,6 @@ def bisect(T_core, rho_max, rho_min, iteration, max_iteration):
     if iteration >= max_iteration or abs(lum - lum_exp) < 1000:
         return [mass, lum, temp, dense, radius]
     elif lum > lum_exp:
-        return bisect(T_core, rho, rho_min, iteration + 1)
+        return bisect(T_core, rho, rho_min, iteration + 1, max_iteration)
     elif lum < lum_exp:
-        return bisect(T_core, rho_max, rho, iteration + 1)
+        return bisect(T_core, rho_max, rho, iteration + 1, max_iteration)
