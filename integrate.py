@@ -60,5 +60,26 @@ def integrate_functions(conds, dr):
         R += dr
         dtau = dtau_dr(conds[3], conds[2])
         tau_lim = abs(surf_bound(conds, R, gamma))
-
+        
+    conds = np.append(conds, R)
     return conds
+
+#print(integrate_functions([0, 0, 1e7, 5e5], 1000))
+
+# Calculates luminosity for a given
+# core temperature and density, 
+# bisects density value until
+# expected luminosity is found
+def bisect(T_core, rho_max, rho_min, iteration):
+    print("Iteration:", iteration)
+    rho = (rho_max - rho_min)/2
+    mass, lum, temp, dense, radius = integrate_functions([0, 0, T_core, rho], 5000)
+
+    lum_exp = 4 * np.pi * sb * radius**2 * temp**4
+
+    if iteration >= 15 or abs(lum - lum_exp) < 1000:
+        return [mass, lum, temp, dense, radius]
+    elif lum > lum_exp:
+        return bisect(T_core, rho, rho_min, iteration + 1)
+    elif lum < lum_exp:
+        return bisect(T_core, rho_max, rho, iteration + 1)

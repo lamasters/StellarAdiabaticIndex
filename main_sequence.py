@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from integrate import integrate_functions
 
 # Global Constants
 mu =  0.6
