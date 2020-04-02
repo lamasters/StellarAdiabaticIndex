@@ -85,3 +85,5 @@ def bisect(T_core, rho_max, rho_min, iteration, max_iteration, dr):
         return bisect(T_core, rho, rho_min, iteration + 1, max_iteration, dr)
     elif lum < lum_exp:
         return bisect(T_core, rho_max, rho, iteration + 1, max_iteration, dr)
+
+
