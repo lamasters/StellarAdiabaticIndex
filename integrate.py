@@ -71,14 +71,14 @@ def integrate_functions(conds, dr):
 # bisects density value until
 # expected luminosity is found
 # iteration should be set to 0 to start
-def bisect(T_core, rho_max, rho_min, iteration):
+def bisect(T_core, rho_max, rho_min, iteration, max_iteration):
     print("Iteration:", iteration)
     rho = (rho_max - rho_min)/2
     mass, lum, temp, dense, radius = integrate_functions([0, 0, T_core, rho], 5000)
 
     lum_exp = 4 * np.pi * sb * radius**2 * temp**4
 
-    if iteration >= 15 or abs(lum - lum_exp) < 1000:
+    if iteration >= max_iteration or abs(lum - lum_exp) < 1000:
         return [mass, lum, temp, dense, radius]
     elif lum > lum_exp:
         return bisect(T_core, rho, rho_min, iteration + 1)
