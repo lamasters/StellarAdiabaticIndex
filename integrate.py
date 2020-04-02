@@ -1,5 +1,5 @@
 import numpy as np
-from main_sequence import *
+# from main_sequence import *
 from multiprocessing import Pool
 from functools import partial
 
@@ -82,11 +82,11 @@ def bisect(T_core, rho_max, rho_min, iteration, max_iteration, dr):
     lum_exp = 4 * np.pi * sb * radius**2 * temp**4
 
     if iteration >= max_iteration or abs(lum - lum_exp) < 1000:
-        return [mass, lum, temp, dense, radius]
+        return print([mass, lum, temp, dense, radius])
     elif lum > lum_exp:
-        return bisect(T_core, rho, rho_min, iteration + 1, max_iteration, dr)
+        return print(bisect(T_core, rho, rho_min, iteration + 1, max_iteration, dr))
     elif lum < lum_exp:
-        return bisect(T_core, rho_max, rho, iteration + 1, max_iteration, dr)
+        return print(bisect(T_core, rho_max, rho, iteration + 1, max_iteration, dr))
 
 # Process multiple stars in parallel
 # Used the same as bisect except T_cores 
@@ -96,3 +96,11 @@ def multi_stars(T_cores, rho_max, rho_min, iteration, max_iteration, dr):
     bisect_T = partial(bisect, rho_max=rho_max, rho_min=rho_min, iteration=iteration, max_iteration=max_iteration, dr=dr)
     
     return p.map(bisect_T, T_cores)
+
+
+# example of how to run a case below:
+
+t_range = list(range(int(3e6), int(3e7 + 9e5), int(9e5)))
+
+if __name__ == "__main__":
+    multi_stars(t_range, 5e5, 3e3, 0, 10, 5000)
