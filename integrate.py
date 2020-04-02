@@ -64,8 +64,6 @@ def integrate_functions(conds, dr):
     conds = np.append(conds, R)
     return conds
 
-#print(integrate_functions([0, 0, 1e7, 5e5], 1000))
-
 # Calculates luminosity for a given
 # core temperature and density, 
 # bisects density value until
