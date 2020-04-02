@@ -82,3 +82,21 @@ def dtau_dr(rho, T):
     factor_2 = 1/factor_2
 
     return rho/(factor_1 + factor_2)
+
+
+def lumin_mass_exact(m):
+    if m < 0.7:
+        return 0.35 * m ** 2.62
+    else:
+        return 1.02 * m ** 3.92
+
+
+def radius_mass_exact(m):
+    if m < 1.66:
+        return 1.06*m**0.945
+    else:
+        return 1.33*m**0.555
+
+
+vrme, vlme = np.vectorize(radius_mass_exact), np.vectorize(lumin_mass_exact)
+
