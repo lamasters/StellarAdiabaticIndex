@@ -1,5 +1,7 @@
 import numpy as np
 from main_sequence import *
+from multiprocessing import Pool
+from functools import partial
 
 M_sun = 1.9885e30 # Mass of the sun
 
@@ -85,3 +87,12 @@ def bisect(T_core, rho_max, rho_min, iteration, max_iteration, dr):
         return bisect(T_core, rho, rho_min, iteration + 1, max_iteration, dr)
     elif lum < lum_exp:
         return bisect(T_core, rho_max, rho, iteration + 1, max_iteration, dr)
+
+# Process multiple stars in parallel
+# Used the same as bisect except T_cores 
+# is a list of core temperatures
+def multi_stars(T_cores, rho_max, rho_min, iteration, max_iteration, dr):
+    p = Pool(processes=len(T_cores))
+    bisect_T = partial(bisect, rho_max=rho_max, rho_min=rho_min, iteration=iteration, max_iteration=max_iteration, dr=dr)
+    
+    return p.map(bisect_T, T_cores)
